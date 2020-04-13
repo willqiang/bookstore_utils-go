@@ -1,7 +1,6 @@
 package rest_errors
 
 import (
-	"errors"
 	"net/http"
 )
 
@@ -12,8 +11,13 @@ type RestErr struct {
 	Causes  []interface{} `json:causes`
 }
 
-func NewError(msg string) error {
-	return errors.New(msg)
+func NewRestError(message string, status int, err string, causes []interface{}) RestErr {
+	return RestErr{
+		Message: message,
+		Status:  status,
+		Error:   err,
+		Causes:  causes,
+	}
 }
 
 func NewBadRequestError(message string) *RestErr {
